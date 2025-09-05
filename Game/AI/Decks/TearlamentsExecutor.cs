@@ -978,7 +978,7 @@ namespace WindBot.Game.AI.Decks
             if (Bot.HasInMonstersZone(CardId.ElShaddollWinda, true, false, true) ||
                 Enemy.HasInMonstersZone(CardId.ElShaddollWinda, true, false, true)) spsummoned = true;
         }
-        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, long hint, bool cancelable)
+        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, int hint, bool cancelable)
         {
             if ((AI.HaveSelectedCards() && mcard_0.All(card => card == null) && ran_fusion_mode_0.All(flag => !flag))
                 || (hint == HintMsg.FusionMaterial)) return null;

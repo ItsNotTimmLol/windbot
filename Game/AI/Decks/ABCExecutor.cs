@@ -201,7 +201,7 @@ namespace WindBot.Game.AI.Decks
             CardId.ABCDragonBuster,
         };
 
-        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, long hint, bool cancelable)
+        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, int hint, bool cancelable)
         {
             //Extra Deck millers
             int[] extradecksend =

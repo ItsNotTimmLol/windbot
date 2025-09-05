@@ -250,7 +250,7 @@ namespace WindBot.Game.AI.Decks
             IList<ClientCard> cards,
             int min,
             int max,
-            long hint,
+            int hint,
             bool cancelable
         ){
             if (min == max && max == cards.Count)

@@ -250,7 +250,7 @@ namespace WindBot.Game.AI.Decks {
             return true;
         }
 
-        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, long hint, bool cancelable) {
+        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, int hint, bool cancelable) {
             ClientCard currentCard = GetCurrentSearchCardFromChain();
             if(currentCard == null)
                 return base.OnSelectCard(cards, min, max, hint, cancelable);

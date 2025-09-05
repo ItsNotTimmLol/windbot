@@ -212,7 +212,7 @@ namespace WindBot.Game.AI.Decks
             return 0;
         }
 
-        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, long hint, bool cancelable)
+        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, int hint, bool cancelable)
         {
             if (hint != HintMsg.Destroy)
                 PhoenixSelectingTarget = 0;

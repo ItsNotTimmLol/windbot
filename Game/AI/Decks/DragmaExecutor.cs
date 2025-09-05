@@ -128,7 +128,7 @@ namespace WindBot.Game.AI.Decks
             // Ruq use is not reset because we only expect to use it once
         }
 
-        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, long hint, bool cancelable)
+        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, int hint, bool cancelable)
         {
             // select cards
             return null;

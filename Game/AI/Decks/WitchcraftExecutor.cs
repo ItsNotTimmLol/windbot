@@ -307,7 +307,7 @@ namespace WindBot.Game.AI.Decks
         }
 
         // overwrite OnSelectCard to act normally in SelectUnselect
-        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, long hint, bool cancelable)
+        public override IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, int hint, bool cancelable)
         {
             // Patronus
             if (hint == HintMsg.AddToHand)

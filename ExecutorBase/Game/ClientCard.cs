@@ -15,12 +15,13 @@ namespace WindBot.Game
         public int Position { get; set; }
         public int Sequence { get; set; }
         public CardLocation Location { get; set; }
+        public CardLocation LastLocation { get; set; }
         public int Alias { get; private set; }
         public int Level { get; private set; }
         public int Rank { get; private set; }
         public int Type { get; private set; }
         public int Attribute { get; private set; }
-        public ulong Race { get; private set; }
+        public int Race { get; private set; }
         public int Attack { get; private set; }
         public int Defense { get; private set; }
         public int LScale { get; private set; }
@@ -71,6 +72,7 @@ namespace WindBot.Game
             ActionIndex = new int[16];
             ActionActivateIndex = new Dictionary<long, int>();
             Location = loc;
+            LastLocation = 0;
         }
 
         public void SetId(int id)
@@ -134,7 +136,7 @@ namespace WindBot.Game
                         }
                     case (uint)Query.Race:
                         {
-                            Race = packet.ReadUInt64();
+                            Race = packet.ReadInt32();
                             break;
                         }
                     case (uint)Query.Attack:
@@ -297,7 +299,7 @@ namespace WindBot.Game
 
         public bool HasRace(CardRace race)
         {
-            return (Race & (ulong)race) != 0;
+            return (Race & (int)race) != 0;
         }
 
         public bool HasSetcode(int setcode)

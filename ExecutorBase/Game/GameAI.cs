@@ -149,6 +149,16 @@ namespace WindBot.Game
         }
 
         /// <summary>
+        /// Called when receiving annouce
+        /// </summary>
+        /// <param name="player">Player who announce.</param>
+        /// <param name="data">Annouced info.</param>
+        public void OnReceivingAnnouce(int player, int data)
+        {
+            Executor.OnReceivingAnnouce(player, data);
+        }
+
+        /// <summary>
         /// Called when the AI has to do something during the battle phase.
         /// </summary>
         /// <param name="battle">Informations about usable cards.</param>
@@ -237,7 +247,7 @@ namespace WindBot.Game
         /// <param name="hint">The hint message of the select.</param>
         /// <param name="cancelable">True if you can return an empty list.</param>
         /// <returns>A new list containing the selected cards.</returns>
-        public IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, long hint, bool cancelable)
+        public IList<ClientCard> OnSelectCard(IList<ClientCard> cards, int min, int max, int hint, bool cancelable)
         {
             // Check for the executor.
             IList<ClientCard> result = Executor.OnSelectCard(cards, min, max, hint, cancelable);
@@ -709,7 +719,7 @@ namespace WindBot.Game
         /// <param name="hint">The hint message of the select.</param>
         /// <param name="cancelable">True if you can return an empty list.</param>
         /// <returns>A new list containing the tributed cards.</returns>
-        public IList<ClientCard> OnSelectTribute(IList<ClientCard> cards, int min, int max, long hint, bool cancelable)
+        public IList<ClientCard> OnSelectTribute(IList<ClientCard> cards, int min, int max, int hint, bool cancelable)
         {
             IList<ClientCard> selected = Executor.OnSelectCard(cards, min, max, hint, cancelable);
             if (selected != null)

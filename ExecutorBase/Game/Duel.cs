@@ -18,13 +18,18 @@ namespace WindBot.Game
         public BattlePhase BattlePhase { get; set; }
 
         public int LastChainPlayer { get; set; }
+        public CardLocation LastChainLocation { get; set; }
         public IList<ClientCard> CurrentChain { get; set; }
+        public IList<ChainInfo> CurrentChainInfo { get; set; }
         public IList<ClientCard> ChainTargets { get; set; }
+        public IList<ClientCard> LastChainTargets { get; set; }
         public IList<ClientCard> ChainTargetOnly { get; set; }
         public int LastSummonPlayer { get; set; }
         public IList<ClientCard> SummoningCards { get; set; }
         public IList<ClientCard> LastSummonedCards { get; set; }
         public bool MainPhaseEnd { get; set; }
+        public int SolvingChainIndex { get; set; }
+        public IList<int> NegatedChainIndexList { get; set; }
 
         public Duel()
         {
@@ -32,15 +37,21 @@ namespace WindBot.Game
             Fields[0] = new ClientField();
             Fields[1] = new ClientField();
             LastChainPlayer = -1;
-            MainPhaseEnd = false;
+            LastChainLocation = 0;
             CurrentChain = new List<ClientCard>();
+            CurrentChainInfo = new List<ChainInfo>();
             ChainTargets = new List<ClientCard>();
+            LastChainTargets = new List<ClientCard>();
             ChainTargetOnly = new List<ClientCard>();
             LastSummonPlayer = -1;
             SummoningCards = new List<ClientCard>();
             LastSummonedCards = new List<ClientCard>();
+            SolvingChainIndex = 0;
+            NegatedChainIndexList = new List<int>();
+            MainPhase = new MainPhase();
+            MainPhaseEnd = false;
+            BattlePhase = new BattlePhase();
         }
-
         public void Clear()
         {
             Fields[0].Clear();
@@ -112,30 +123,8 @@ namespace WindBot.Game
 
         public void AddCard(CardLocation loc, int cardId, int player, int seq, int pos)
         {
-            switch (loc)
-            {
-                case CardLocation.Hand:
-                    Fields[player].Hand.Add(new ClientCard(cardId, loc, -1, pos, player));
-                    break;
-                case CardLocation.Grave:
-                    Fields[player].Graveyard.Add(new ClientCard(cardId, loc,-1, pos, player));
-                    break;
-                case CardLocation.Removed:
-                    Fields[player].Banished.Add(new ClientCard(cardId, loc, -1, pos, player));
-                    break;
-                case CardLocation.MonsterZone:
-                    Fields[player].MonsterZone[seq] = new ClientCard(cardId, loc, seq, pos, player);
-                    break;
-                case CardLocation.SpellZone:
-                    Fields[player].SpellZone[seq] = new ClientCard(cardId, loc, seq, pos, player);
-                    break;
-                case CardLocation.Deck:
-                    Fields[player].Deck.Add(new ClientCard(cardId, loc, -1, pos, player));
-                    break;
-                case CardLocation.Extra:
-                    Fields[player].ExtraDeck.Add(new ClientCard(cardId, loc, -1, pos, player));
-                    break;
-            }
+            ClientCard card = new ClientCard(cardId, loc, seq, pos);
+            AddCard(loc, card, player, seq, pos, cardId);
         }
 
         public void AddCard(CardLocation loc, ClientCard card, int player, int seq, int pos, int id)
@@ -202,6 +191,23 @@ namespace WindBot.Game
         public int GetLocalPlayer(int player)
         {
             return IsFirst ? player : 1 - player;
+        }
+
+        public ClientCard GetCurrentSolvingChainCard()
+        {
+            if (SolvingChainIndex == 0 || SolvingChainIndex > CurrentChain.Count) return null;
+            return CurrentChain[SolvingChainIndex - 1];
+        }
+
+        public ChainInfo GetCurrentSolvingChainInfo()
+        {
+            if (SolvingChainIndex == 0 || SolvingChainIndex > CurrentChainInfo.Count) return null;
+            return CurrentChainInfo[SolvingChainIndex - 1];
+        }
+
+        public bool IsCurrentSolvingChainNegated()
+        {
+            return SolvingChainIndex > 0 && NegatedChainIndexList.Contains(SolvingChainIndex);
         }
     }
 }
